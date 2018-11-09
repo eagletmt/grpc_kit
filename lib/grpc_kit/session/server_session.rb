@@ -170,9 +170,9 @@ module GrpcKit
 
       # nghttp2_session_callbacks_set_on_frame_send_callback
       def on_frame_send(frame)
-        GrpcKit.logger.debug("on_frame_send #{frame}")
         case frame
         when DS9::Frames::Data, DS9::Frames::Headers
+          # GrpcKit.logger.debug("on_frame_send #{frame}")
           stream = @streams[frame.stream_id]
           if frame.end_stream?
             stream.close_local
@@ -202,7 +202,7 @@ module GrpcKit
 
       # nghttp2_session_callbacks_set_on_header_callback
       def on_header(name, value, frame, _flags)
-        GrpcKit.logger.debug("#{name} => #{value}")
+        # GrpcKit.logger.debug("#{name} => #{value}")
         stream = @streams[frame.stream_id]
         stream.add_header(name, value)
       end
